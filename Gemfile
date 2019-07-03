@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails',          '5.1.6'
+gem 'rails-i18n'
 gem 'bcrypt',         '3.1.12'
 gem 'gimei',          '0.3.0'
 gem 'will_paginate',           '3.1.6'
