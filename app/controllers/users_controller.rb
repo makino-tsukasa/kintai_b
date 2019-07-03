@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
+  before_action :set_user,       only: [:show, :edit, :update, :destroy]
+  before_action :logged_in_user, only: [:index, :show, :edit, :update, :destroy]
   before_action :correct_user,   only: [:edit, :update]  
   before_action :admin_user,     only: [:destroy, :edit_basic_info, :update_basic_info]
 
@@ -8,7 +9,6 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
     @first_day = first_day(params[:first_day])
     @last_day = @first_day.end_of_month
     (@first_day..@last_day).each do |day|
@@ -49,8 +49,8 @@ class UsersController < ApplicationController
   end
   
   def destroy
-    User.find(params[:id]).destroy
-    flash[:success] = "削除しました。"
+    @user.destroy
+    flash[:success] = "#{@user.name}のデータを削除しました。"
     redirect_to users_url
   end
   
@@ -90,9 +90,13 @@ class UsersController < ApplicationController
       end
     end
     
+    # paramsハッシュからユーザーを取得します。
+    def set_user
+      @user = User.find(params[:id])
+    end
+ 
     #正しいuserかどうか確認
     def correct_user
-      @user = User.find(params[:id])
       redirect_to(root_url) unless current_user?(@user)
     end
     
