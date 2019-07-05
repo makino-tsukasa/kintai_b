@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :set_user,       only: [:show, :edit, :update, :destroy]
-  before_action :logged_in_user, only: [:index, :show, :edit, :update, :destroy]
+  before_action :set_user,       only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info]
+  before_action :logged_in_user, only: [:index, :show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info]
   before_action :correct_user,   only: [:edit, :update]  
   before_action :admin_user,     only: [:destroy, :edit_basic_info, :update_basic_info]
 
@@ -55,17 +55,15 @@ class UsersController < ApplicationController
   end
   
   def edit_basic_info
-  @user = User.find(params[:id])
   end
   
   def update_basic_info
-  @user = User.find(params[:id])
     if @user.update_attributes(basic_info_params)
-      flash[:success] = "基本情報を更新しました。"
-      redirect_to @user   
+      flash[:success] = "#{@user.name}の基本情報を更新しました。"
     else
-     render 'edit_basic_info'
+      flash[:danger] = "#{@user.name}の更新は失敗しました。<br>" + @user.errors.full_messages.join("<br>")
     end
+  redirect_to users_url
   end
 
   

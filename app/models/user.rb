@@ -11,6 +11,8 @@ class User < ApplicationRecord
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
                                 # 大文字と小文字の区別を無視する
+  validates :basic_time, presence: true
+  validates :work_time,  presence: true                              
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
   validates :department, length: { in: 3..50 }, allow_blank: true
