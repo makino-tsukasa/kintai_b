@@ -5,9 +5,10 @@ class UsersController < ApplicationController
   before_action :admin_user,     only: [:destroy, :edit_basic_info, :update_basic_info]
 
   def index
-    @users = User.paginate(page: params[:page])
+    @users = User.paginate(page: params[:page]).search(params[:search])
+    @searched_user = User.search(params[:search])
   end
-
+  
   def show
     @first_day = first_day(params[:first_day])
     @last_day = @first_day.end_of_month
