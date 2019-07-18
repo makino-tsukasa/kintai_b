@@ -52,18 +52,18 @@
             <% elsif day.worked_on.wday == 6 %>
               <font color="blue">土</font>
             <% else %>
-              <%= %w{日 月 火 水 木 金 土}[day.worked_on.wday] %>
+              <%= $days_of_the_week[day.worked_on.wday] %>
             <% end %>
           </td>
           <td><%= day.started_at.to_s(:hour) if day.started_at.present? %></td>
-          <td><%= day.started_at.to_s(:min) if day.started_at.present? %></td>
+          <td><%= day.started_at.floor_to(15.minutes).to_s(:min) if day.started_at.present? %></td>
           <td>
             <% if day.worked_on == Date.today && day.started_at.nil? %>
               <%= button_to "出社", user_attendances_path(@user), class: "btn btn-xs btn-primary" %>
             <% end %>
           </td>
           <td><%= day.finished_at.to_s(:hour) if day.finished_at.present? %></td>
-          <td><%= day.finished_at.to_s(:min) if day.finished_at.present? %></td>
+          <td><%= day.finished_at.floor_to(15.minutes).to_s(:min) if day.finished_at.present? %></td>
           <td>
             <% if day.worked_on == Date.today && day.started_at.present? && day.finished_at.nil? %>
               <%= button_to "退社", user_attendances_path(@user), class: "btn btn-xs btn-primary" %>
@@ -82,9 +82,9 @@
     </tbody>
     <tfoot>
       <tr>
-        <td colspan = "2"><%= format_basic_time(@user.basic_time).to_f * @worked_sum %></td>
+        <td colspan = "2">総合勤務時間：<%= format_basic_time(@user.basic_time).to_f * @worked_sum %></td>
         <td colspan = "6"></td>
-        <td><%= working_times_sum(@total_seconds) unless @total_seconds.nil? %></td>
+        <td>在社合計：<%= working_times_sum(@total_seconds) unless @total_seconds.nil? %></td>
         <td></td>
       </tr>
     </tfoot>
