@@ -11,7 +11,7 @@ module AttendancesHelper
   
   # 追加機能no.10に合わせた表示
   def working_times(started_at, finished_at)
-    format("%.2f", (((finished_at - started_at) / 60) / 60.0).floor_to(0.25))
+    format("%.2f", (((finished_at.floor_to(15.minutes) - started_at.floor_to(15.minutes)) / 60) / 60.0).floor_to(0.25))
   end
   
   def working_times_sum(seconds)
