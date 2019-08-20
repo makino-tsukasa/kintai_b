@@ -1,10 +1,10 @@
 <% provide(:title, '一覧') %>
 
 <!-- 追加機能 no.9 -->
-<% if @searched_user.present? %>
+<% if params[:search].present? %>
   <h1>検索結果</h1>
 <% else %>
-  <h1>ユーザー一覧</h1>
+  <h1>全てのユーザー</h1>
 <% end %>
 
 <!--  検索拡張機能  -->

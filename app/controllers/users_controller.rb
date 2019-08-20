@@ -5,8 +5,11 @@ class UsersController < ApplicationController
   before_action :admin_or_correct_user, only: [:show, :edit, :update]
 
   def index
-    @users = User.paginate(page: params[:page]).search(params[:search])
-    @searched_user = User.search(params[:search])
+    if params[:search].present?
+      @users = User.paginate(page: params[:page]).search(params[:search])
+    else
+      @users = User.paginate(page: params[:page])
+    end
   end
   
   def show
