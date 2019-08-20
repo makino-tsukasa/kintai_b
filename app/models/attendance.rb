@@ -8,7 +8,7 @@ class Attendance < ApplicationRecord
   validate :finished_at_must_be_later_than_started_at
 
   def finished_at_is_invalid_without_a_started_at
-    errors.add(:started_at, "が必要です") if started_at.blank? && finished_at.present?
+      errors.add(:started_at, "が必要です") if started_at.blank? && finished_at.present?
   end
   
   # 追加機能7

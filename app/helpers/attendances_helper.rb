@@ -15,7 +15,7 @@ module AttendancesHelper
   end
   
   def working_times_sum(seconds)
-    format("%.2f", seconds / 60 / 60.0)
+    format("%.2f", (seconds / 60 / 60.0).floor_to(0.25))
   end
   
   def first_day(date)

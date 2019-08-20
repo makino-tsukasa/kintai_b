@@ -18,10 +18,23 @@
           <%= fields_for "attendances[]", day do |af| %>
             <tr>
               <td><%= day.worked_on.to_s(:date) %></td>
-              <td><%= %w{日 月 火 水 木 金 土}[day.worked_on.wday] %></td>
-              <td><%= af.time_field :started_at, class: "form-control" %></td>
-              <td><%= af.time_field :finished_at, class: "form-control" %></td>
-              <td><% if day.started_at.present? && day.finished_at.present? %>
+              <td>
+              <% if day.worked_on.wday == 0 %>
+                <font color="red">日</font>
+              <% elsif day.worked_on.wday == 6 %>
+                  <font color="blue">土</font>
+              <% else %>
+                <%= $days_of_the_week[day.worked_on.wday] %>
+              <% end %>
+              </td>
+              <% if Date.current < day.worked_on %>
+                <td><%= af.time_field :started_at, readonly: true, class: "form-control" %></td>
+                <td><%= af.time_field :finished_at, readonly: true, class: "form-control" %></td>
+              <% else %>
+                <td><%= af.time_field :started_at, class: "form-control" %></td>
+                <td><%= af.time_field :finished_at, class: "form-control" %></td>
+              <% end %>
+                <td><% if day.started_at.present? && day.finished_at.present? %>
                     <%= working_times(day.started_at, day.finished_at) %>
                   <% end %>
               </td>
@@ -32,8 +45,8 @@
       </tbody>
     </table>
     <div class="btn-attendances-update">
-      <%= f.submit "更新", class: "btn btn-primary" %>
-      <%= link_to "キャンセル", user_path(@user, params:{first_day: @first_day }), class: "btn btn-default btn-block" %>
+      <%= f.submit "更新", class: "btn btn-primary btn-update" %>
+      <%= link_to "キャンセル", user_path(@user, params:{first_day: @first_day }), class: "btn btn-default btn-block btn-update" %>
     </div>
   <% end %>
 </div>

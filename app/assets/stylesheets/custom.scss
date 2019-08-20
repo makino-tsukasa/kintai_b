@@ -137,6 +137,8 @@ input, textarea, select, .uneditable-input {
 
 div#nav-search {
   margin-bottom: 10px;
+  width: 300px;
+  float: right;
 }
 
 /* btn */
@@ -146,14 +148,18 @@ div#nav-search {
   margin: auto;
 }
 
+.btn-update {
+  margin-top: 10px;
+}
+
+.btn-edit {
+  margin: 5px 0px;
+}
+
 /* ログインフォーム */
 
 .label-login {
   margin-top: 5px;
-}
-
-.btn-login {
-  margin-top: 10px;
 }
 
 .checkbox-login {
@@ -162,4 +168,9 @@ div#nav-search {
   span {
     font-weight: normal;
   }
+}
+
+// top-page
+.btn-login {
+  margin: 10px 0px;
 }
